@@ -13,6 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/{sort?}', function ($sort = null) {
+    $prods = json_decode(file_get_contents('https://testapi.oglsoftware.co.uk/products'));
+
+    $products = collect($prods->data);
+
+
+    if ($sort != null)
+        $sortedProducts = $products->sortBy($sort);
+    else
+        $sortedProducts = $products;
+
+    return view('welcome', compact('sortedProducts'));
 });
