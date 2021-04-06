@@ -12,12 +12,14 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/javascript', function () {
+    return view('javascript');
+});
 
 Route::get('/{sort?}', function ($sort = null) {
     $prods = json_decode(file_get_contents('https://testapi.oglsoftware.co.uk/products'));
 
     $products = collect($prods->data);
-
 
     if ($sort != null)
         $sortedProducts = $products->sortBy($sort);
@@ -26,3 +28,5 @@ Route::get('/{sort?}', function ($sort = null) {
 
     return view('welcome', compact('sortedProducts'));
 });
+
+
