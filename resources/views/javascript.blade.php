@@ -13,21 +13,11 @@
     </head>
     <body>
         <div>
-            {{-- <a class="p-3 m-2" href="/">Sort By Default</a> --}}
+            <a class="p-3 m-2" onclick="load()">Sort By Default</a>
             <a class="p-3 m-2" onclick="sortByPrice()">Sort By Price</a>
             <a class="p-3 m-2" onclick="sortBySku()">Sort By SKU</a>
         </div>
         <div class="justify-center min-h-screen bg-gray-100 sm:items-center py-4 sm:pt-0 grid grid-cols-3 gap-2" id="container">
-            {{-- <div class="bg-blue-300 m-2 p-2 text-white">
-                <ul style="list-style: none; text-align: center;">
-                    <li style="font-size: 20px;"><strong>{{ $product->name }}</strong></li>
-                    <li><img src="{{ $product->image }}" style="width: 50%;" class="m-1 mr-auto ml-auto"></li>
-                    <li><strong>Description:</strong> {{ $product->description }}</li>
-                    <li><strong>SKU:</strong> {{ $product->sku }}</li>
-                    <li><strong>Price:</strong> {{ $product->price }}</li>
-                    <li><strong>Stock Level:</strong> {{ $product->{'stock-level'} }}</li>
-                </ul>
-            </div> --}}
         </div>
     </body>
 </html>
@@ -62,7 +52,24 @@ async function sortByPrice() {
 
     let sorted = entries.sort((a, b) => (a[1].price < b[1].price) ? 1 : -1);
 
-    console.log(sorted);
+    let generatedHtml = [];
+
+    sorted.forEach((item) => {
+        html = `<div class="bg-blue-300 m-2 p-2 text-white">
+                    <ul style="list-style: none; text-align: center;">
+                        <li style="font-size: 20px;"><strong>${item[1].name}</strong></li>
+                        <li><img src="${item[1].image}" style="width: 50%;" class="m-1 mr-auto ml-auto"></li>
+                        <li><strong>Description:</strong> ${item[1].description}</li>
+                        <li><strong>SKU:</strong> ${item[1].sku}</li>
+                        <li><strong>Price:</strong> ${item[1].price}</li>
+                        <li><strong>Stock Level:</strong> ${item[1]["stock-level"]}</li>
+                    </ul>
+                </div>`;
+
+        generatedHtml.push(html);
+    });
+
+    document.getElementById('container').innerHTML = generatedHtml.toString();
 }
 
 async function sortBySku() {
@@ -72,6 +79,23 @@ async function sortBySku() {
 
     let sorted = entries.sort((a, b) => (a[1].sku < b[1].sku) ? 1 : -1);
 
-    console.log(sorted);
+    let generatedHtml = [];
+
+    sorted.forEach((item) => {
+        html = `<div class="bg-blue-300 m-2 p-2 text-white">
+                    <ul style="list-style: none; text-align: center;">
+                        <li style="font-size: 20px;"><strong>${item[1].name}</strong></li>
+                        <li><img src="${item[1].image}" style="width: 50%;" class="m-1 mr-auto ml-auto"></li>
+                        <li><strong>Description:</strong> ${item[1].description}</li>
+                        <li><strong>SKU:</strong> ${item[1].sku}</li>
+                        <li><strong>Price:</strong> ${item[1].price}</li>
+                        <li><strong>Stock Level:</strong> ${item[1]["stock-level"]}</li>
+                    </ul>
+                </div>`;
+
+        generatedHtml.push(html);
+    });
+
+    document.getElementById('container').innerHTML = generatedHtml.toString();
 }
 </script>
